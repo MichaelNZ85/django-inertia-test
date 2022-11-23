@@ -2,66 +2,64 @@
 import { ref } from "vue";
 let count = ref(0);
 const props = defineProps({
-    test: String,
+    messages: Array,
 });
+let message = ref("");
+let author = ref("");
+
+const handleClick = () => {
+    if (message.value.length > 0) {
+        alert("Meow!" + message.value);
+    }
+};
 </script>
 
 <template>
     <div class="container">
         <div class="centerer">
-            <div class="box"></div>
-            <div class="items">
-                <h1>Django + Inertia + Vite + Vue 3!</h1>
-                <button class="button" @click="count = count + 1">
-                    Count is {{ count }}
-                </button>
-                <p>
-                    This random number was sent from the backend:
-                    {{ props.test }}
-                </p>
-                <h3>Check out the technologies</h3>
+            <div class="box">
+                <div class="items">
+                    <div
+                        class="message-root"
+                        v-for="message in props.messages"
+                        :key="message.created_at"
+                    >
+                        <span class="message">{{ message.content }}</span>
+                        <span class="author">{{ message.author }}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <h1>Django</h1>
-        <p>
-            <a href="https://www.djangoproject.com/">Django</a> is Python web
-            framework following the model-view-template pattern (essentially the
-            same as MVC but using Django's own terminology), and takes care of
-            much of the hassle of writing web applications.
-        </p>
-
-        <h1>Inertia</h1>
-        <p>
-            <a href="https://inertiajs.com/">Inertia</a> is a new approach to
-            building single-page web apps. It is essentially some 'glue' that
-            joins the frontend and the backend together without the need of an
-            API. Instead of returning static templates, Inertia allows you to
-            return Vue, React or Svelte components directly from the backend!
-        </p>
-
-        <h1>Vite</h1>
-        <p>
-            <a href="https://vitejs.dev/">Vite</a>, which means "quick" in
-            French, is a rapid development tool for building web projects. It
-            significantly speeds up and improves the frontend development
-            experience. Using Hot Module Replacement, Vite can update only the
-            parts of the code that have been changed, instead of reloading the
-            whole application.
-        </p>
-
-        <h1>Vue</h1>
-        <p>
-            <a href="https://vuejs.org/">Vue</a> is a progressive JavaScript
-            frontend framework designed to be flexible. The core Vue library
-            focuses on the view layer only, and additional packages are needed
-            for features like state management and routing (the latter of which
-            is not needed with Inertia).
-        </p>
-        <p><inertia-link href="/">Back to Home</inertia-link></p>
+        <div style="display: flex; gap: 10px">
+            <input type="text" v-model="message" placeholder="Enter message" />
+            <input type="text" v-model="author" placeholder="your name" />
+            <button type="button" @click="handleClick">Meow</button>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.message-root {
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    border: 1px solid #880202;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.message {
+    font-size: 1rem;
+    color: #0055ff;
+    font-weight: bold;
+}
+.author {
+    font-size: 0.8rem;
+    color: #333;
+    font-style: italic;
+}
 .container {
     display: flex;
     justify-content: center;
@@ -76,9 +74,8 @@ const props = defineProps({
     width: 100%;
 }
 .box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 80vh;
+    width: 40vw;
 }
 .items {
     display: flex;

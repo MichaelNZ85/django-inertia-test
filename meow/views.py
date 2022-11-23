@@ -1,9 +1,12 @@
 from inertia import render
 from random import randint
 
+from .models import Message
+
 def home(request):
+    messages = Message.objects.order_by('created_at').all()
     return render(request, 'Home', props={
-        'test': randint(1,100)
+        'messages': messages
     })
 
 def events(request):
