@@ -8,8 +8,11 @@ import Layout from './components/Layout.vue';
 const pages = import.meta.glob('./pages/**/*.vue');
 
 document.addEventListener('DOMContentLoaded', () => {
-    axios.defaults.xsrfCookieName = 'csrftoken';
-    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+//    axios.defaults.xsrfCookieName = 'csrftoken';
+//    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+    const csrfInput = document.querySelector("[name=csrfmiddlewaretoken]");
+const csrfToken= csrfInput.value;
+    axios.defaults.headers.common['X-CSRFToken'] = csrfToken;
 
     InertiaProgress.init({ showSpinner: true });
 

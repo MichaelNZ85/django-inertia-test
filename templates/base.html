@@ -15,7 +15,8 @@
     <title>Django/Vue with Inertia</title>
   </head>
   <body style="background-color: #92f2ff">
-    {% block inertia %}
+    {% csrf_token %}
+  {% block inertia %}
 
     {% endblock %}
     {% js_routes %}
