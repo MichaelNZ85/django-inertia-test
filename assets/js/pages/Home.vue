@@ -1,4 +1,5 @@
 <script setup>
+import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 let count = ref(0);
 const props = defineProps({
@@ -9,7 +10,7 @@ let author = ref("");
 
 const handleClick = () => {
     if (message.value.length > 0) {
-        alert("Meow!" + message.value);
+        Inertia.post("", { message: message.value });
     }
 };
 </script>
